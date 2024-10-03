@@ -43,7 +43,7 @@ $hotels = [
 
 
 $parking_filter = isset($_GET['parking']) ? $_GET['parking'] : '';
-
+$vote_filter = isset($_GET['vote']) ? $_GET['vote'] : '';
 
 ?>
 
@@ -62,7 +62,7 @@ $parking_filter = isset($_GET['parking']) ? $_GET['parking'] : '';
 <body class="p-3">
   <h1>PHP Hotel</h1>
 
-  <!-- Form per il filtro -->
+  <!-- Form per i filtri -->
   <form action="" method="GET" class="mb-4">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" name="parking" value="1" id="parking"
@@ -71,6 +71,14 @@ $parking_filter = isset($_GET['parking']) ? $_GET['parking'] : '';
         Mostra solo hotel con parcheggio
       </label>
     </div>
+
+    <!-- Campo per il filtro voto -->
+    <div class="form-group">
+      <label for="vote">Voto minimo (da 1 a 5):</label>
+      <input type="number" class="form-control" name="vote" id="vote" min="1" max="5"
+        value="<?php echo $vote_filter; ?>">
+    </div>
+
     <button type="submit" class="btn btn-primary">Filtra</button>
   </form>
 
@@ -91,6 +99,12 @@ $parking_filter = isset($_GET['parking']) ? $_GET['parking'] : '';
         if ($parking_filter == '1' && !$hotel['parking']) {
           continue; // Salta gli hotel senza parcheggio se il filtro è attivo
         }
+
+        // Filtra per voto minimo se specificato
+        if ($vote_filter && $hotel['vote'] < $vote_filter) {
+          continue; // Salta gli hotel con un voto inferiore al filtro
+        }
+
 
         echo "<tr>";
         echo "<td>{$hotel['name']}</td>";
