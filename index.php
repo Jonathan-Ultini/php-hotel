@@ -40,8 +40,6 @@ $hotels = [
 
 ];
 
-
-
 $parking_filter = isset($_GET['parking']) ? $_GET['parking'] : '';
 $vote_filter = isset($_GET['vote']) ? $_GET['vote'] : '';
 
@@ -106,13 +104,13 @@ $vote_filter = isset($_GET['vote']) ? $_GET['vote'] : '';
         }
 
 
-        echo "<tr>";
-        echo "<td>{$hotel['name']}</td>";
-        echo "<td>{$hotel['description']}</td>";
-        echo "<td>" . ($hotel['parking'] ? 'Sì' : 'No') . "</td>";
-        echo "<td>{$hotel['vote']}</td>";
-        echo "<td>{$hotel['distance_to_center']}</td>";
-        echo "</tr>";
+        echo "<tr>
+            <td>{$hotel['name']}</td>
+            <td>{$hotel['description']}</td>
+            <td>" . ($hotel['parking'] ? 'Sì' : 'No') . "</td>
+            <td>{$hotel['vote']}</td>
+            <td>{$hotel['distance_to_center']}</td>
+          </tr>";
       }
       ?>
     </tbody>
