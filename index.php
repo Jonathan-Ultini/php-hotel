@@ -40,6 +40,11 @@ $hotels = [
 
 ];
 
+
+
+$parking_filter = isset($_GET['parking']) ? $_GET['parking'] : '';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -54,33 +59,50 @@ $hotels = [
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
-  <div class="container">
-    <h1 class="my-4">Lista degli hotel</h1>
+<body class="p-3">
+  <h1>PHP Hotel</h1>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Descrizione</th>
-          <th>Parcheggio</th>
-          <th>Voto</th>
-          <th>Distanza dal centro (km)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($hotels as $hotel) : ?>
-        <tr>
-          <td><?php echo $hotel['name']; ?></td>
-          <td><?php echo $hotel['description']; ?></td>
-          <td><?php echo $hotel['parking'] ? 'Sì' : 'No'; ?></td>
-          <td><?php echo $hotel['vote']; ?></td>
-          <td><?php echo $hotel['distance_to_center']; ?></td>
-        </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
+  <!-- Form per il filtro -->
+  <form action="" method="GET" class="mb-4">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="parking" value="1" id="parking"
+        <?php echo ($parking_filter == '1') ? 'checked' : ''; ?>>
+      <label class="form-check-label" for="parking">
+        Mostra solo hotel con parcheggio
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Filtra</button>
+  </form>
+
+  <!-- Tabella degli hotel -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Descrizione</th>
+        <th>Parcheggio</th>
+        <th>Voto</th>
+        <th>Distanza dal centro (km)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      foreach ($hotels as $hotel) {
+        if ($parking_filter == '1' && !$hotel['parking']) {
+          continue; // Salta gli hotel senza parcheggio se il filtro è attivo
+        }
+
+        echo "<tr>";
+        echo "<td>{$hotel['name']}</td>";
+        echo "<td>{$hotel['description']}</td>";
+        echo "<td>" . ($hotel['parking'] ? 'Sì' : 'No') . "</td>";
+        echo "<td>{$hotel['vote']}</td>";
+        echo "<td>{$hotel['distance_to_center']}</td>";
+        echo "</tr>";
+      }
+      ?>
+    </tbody>
+  </table>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
