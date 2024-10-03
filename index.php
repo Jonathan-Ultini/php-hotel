@@ -55,19 +55,32 @@ $hotels = [
 </head>
 
 <body>
-  <h1>PHP Hotel</h1>
-  <h1>Lista degli hotel</h1>
+  <div class="container">
+    <h1 class="my-4">Lista degli hotel</h1>
 
-  <?php foreach ($hotels as $hotel) : ?>
-  <h2><?php echo $hotel['name']; ?></h2>
-  <p><strong>Descrizione:</strong> <?php echo $hotel['description']; ?></p>
-  <p><strong>Parcheggio:</strong> <?php echo $hotel['parking'] ? 'Sì' : 'No'; ?></p>
-  <p><strong>Voto:</strong> <?php echo $hotel['vote']; ?></p>
-  <p><strong>Distanza dal centro:</strong> <?php echo $hotel['distance_to_center']; ?> km</p>
-  <hr>
-  <?php endforeach; ?>
-
-
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrizione</th>
+          <th>Parcheggio</th>
+          <th>Voto</th>
+          <th>Distanza dal centro (km)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($hotels as $hotel) : ?>
+        <tr>
+          <td><?php echo $hotel['name']; ?></td>
+          <td><?php echo $hotel['description']; ?></td>
+          <td><?php echo $hotel['parking'] ? 'Sì' : 'No'; ?></td>
+          <td><?php echo $hotel['vote']; ?></td>
+          <td><?php echo $hotel['distance_to_center']; ?></td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
